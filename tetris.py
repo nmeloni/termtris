@@ -1,16 +1,48 @@
+#########################
+#
+#
+#  termtris.py
+#
+#  author: Nicolas Méloni
+#  Université  de toulon
+#  11 Octobre 2017
+#
+#########################
+
+
 from random import randrange
 from copy import deepcopy
 HA,LA=22,12
+P,X,Y,ORIENT = 0,1,2,3
 T='IOTLJZS'
 grille=[ [1]+[0]*LA+[1] for i in range(HA)]+[[1]*LA]
-tetriminos={'I':[[0,5],[0,6],[0,7],[0,8]],
-           'O':[[1,6],[1,7],[0,6],[0,7]],
-           'T':[[1,7],[0,6],[0,7],[0,8]],
-           'L':[[1,6],[0,6],[0,7],[0,8]],
-           'J':[[1,8],[0,6],[0,7],[0,8]],
-           'Z':[[1,7],[1,8],[0,6],[0,7]],
-           'S':[[1,6],[1,7],[0,7],[0,8]]}
-tetrimino=[]
+tetriminos={'I':[[(1,5),(1,6),(1,7),(1,8)],
+                 [(0,7),(1,7),(2,7),(3,7)],
+                 [(2,5),(2,6),(2,7),(2,8)],
+                 [(0,6),(1,6),(2,6),(3,6)]]
+           'O':[[(1,6),(1,7),(0,6),(0,7)]],
+           'T':[[(0,7),(1,6),(1,7),(1,8)],
+                [(0,7),(1,7),(2,7),(1,8)],
+                [(2,7),(1,7),(2,7),(1,8)],
+                [(1,6),(1,7),(2,7),(1,8)]]
+           'L':[[(1,6),(1,7),(1,8),(0,8)],
+                [(0,7),(1,7),(2,7),(2,8)],
+                [(2,6),(1,6),(1,7),(1,8)],
+                [(0,6),(0,7),(1,7),(2,7)]]
+           'J':[[(0,8),(1,6),(1,7),(1,8)],
+                [(0,7),(1,7),(2,7),(0,8)],
+                [(1,6),(1,7),(1,8),(2,8)],
+                [(2,6),(0,7),(1,7),(2,7)]]
+           'Z':[[(1,7),(1,8),(0,6),(0,7)],
+                [(1,7),(1,8),(2,7),(0,8)],
+                [(1,7),(1,6),(2,7),(2,8)],
+                [(1,7),(0,7),(1,6),(2,6)]]
+           'S':[[(1,6),(1,7),(0,7),(0,8)],
+                [(1,7),(0,7),(1,8),(2,8)],
+                [(1,7),(1,8),(2,7),(2,6)],
+                [(1,7),(0,6),(1,6),(2,7)]]}
+ttm=[]
+piece=[]
 
 def affiche_grille():
     jeu=""
@@ -26,9 +58,10 @@ def affiche_grille():
     print(jeu)
 
 def ajoute_tetrimino(t):
-    global tetrimino
-    tetrimino=deepcopy(tetriminos[t])
-    for i,j in tetrimino:
+    global ttm, piece
+    ttm=[t,0,0,0]
+    piece = tetrimino[ttm[P]][ttm[ORIENT]]
+    for i,j in piece:
         if grille[i][j]==1:
             return False
         else:
@@ -36,30 +69,31 @@ def ajoute_tetrimino(t):
     return True
     
 def descend():
-    global tetrimino
-    for i,j in tetrimino:
-        if grille[i+1][j]==1:
+    global ttm
+    for i,j in piece:
+        if grille[i+ttm[X]+1][j+ttm[Y]]==1:
             return False
     return True
 
 def gauche():
-    global tetrimino
-    for i,j in tetrimino:
-        if grille[i][j-1]==1:
+    global ttm
+    for i,j in piece:
+        if grille[i+ttm[X]][j+ttm[Y]-1]==1:
             return False
     return True
 
 def droite():
-    global tetrimino
-    for i,j in tetrimino:
-        if grille[i][j+1]==1:
+    global ttm
+    for i,j in piece:
+        if grille[i+ttm[X]][j+ttm[Y]+1]==1:
             return False
     return True
 
 def move_down():
-    global tetrimino
-    for c in range(len(tetrimino)):
-        i,j=tetrimino[c][0],tetrimino[c][1]
+    global ttm
+    
+    for c in range(len(ttm)):
+        i,j=t[c][0],tetrimino[c][1]
         grille[i][j]=0
         grille[i+1][j]=2
         tetrimino[c][0]+=1

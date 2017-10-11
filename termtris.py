@@ -58,7 +58,7 @@ class termtris:
         
 
     def affichage(self):
-        jeu=""
+        jeu="\n\n"
         for l in self.grille[:-1]:
             ligne='|'
             for e in l[1:-1]:
@@ -84,7 +84,6 @@ class termtris:
         return True
 
     def supprimer_ligne(self):
-        print("del ligne")
         lignes = []
         for i in range(len(self.grille)-1):
             if not (0 in self.grille[i]):

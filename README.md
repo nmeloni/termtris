@@ -1,2 +1,5 @@
-# termtris
-Slow terminal turn by turn tetris clone.
+# termtris / cursetris
+
+Clone de Tetris en mode terminal. La première version **Termtris** est
+en mode tour par tour. La dernière version **Cursetris** utilise le
+module *curse* pour implanter un gameplay temps réel.

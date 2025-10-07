@@ -1,15 +1,11 @@
 #-*- coding: utf-8 -*-
+"""
+ Termtris - Jeu de Tetris au tour par tour dans un termianl.
 
-#########################
-#
-#
-#  termtris.py
-#
-#  author: Nicolas Méloni
-#  Université  de toulon
-#  11 Octobre 2017
-#
-#########################
+ Version orginale du jeu avec interface rudimentaire
+"""
+__author__ = "Nicolas Méloni"
+__version__ = "1.0"
 
 
 import random
